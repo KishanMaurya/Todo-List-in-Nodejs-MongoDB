@@ -1,0 +1,152 @@
+<%- include('include/__header')%>    
+<section class="section-content padding-y">
+    
+        <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+            <% if(messages.success) {%>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong><%= messages.success %></strong>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              <%} else if(messages.error){%>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong><%= messages.error %></strong>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              <%}%>
+          <article class="card-body">
+                <form action="/taskPost" method="POST">
+                    <label for="" class="font-weight-bold">Todo List</label>
+                    <div class="input-group">
+                        <input type="text" name="taskname" class="form-control" placeholder="Add tood name here...." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-primary">Add Todo</button>
+                        </div>
+                      </div>
+                </form>
+            </article>
+        </div> 
+</section>
+
+<section class="section-content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Created Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% todo.forEach((data)=>{
+                                %>
+                                <tr>
+                                    <td><%- data.title %></td>
+                                    <td><%= moment(data.createdAt).format("MMM Do YY, h:mm:ss a") %></td>
+                                    <td class="">
+                                        
+                                        
+                                            <input type="checkbox" data="<%- data._id %>" class="form-check-input check"
+     value="<%- data.status %>" <%- data.status=="complete" ? "checked" : "undefind" ,  data.status=="incomplete" ? "undefind" : "undefind" %> ></td>
+                                            
+                                        
+                                    <td>
+                                        <button data="<%- data._id %>" class="btn btn-info btn-sm view">View</button>
+                                        <button data="<%- data._id %>" class="btn btn-info btn-sm edit">update</button>
+                                        <button data="<%- data._id %>" class="btn btn-danger btn-sm delete">Delete</button>
+                                    </td>
+                                </tr>
+                                <%
+                            })%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div id="UpdateModel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content bg-white">
+        <div class="modal-header bg-success">
+          <h4 class="modal-title text-white font-weight-bold">Task</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <h6>Do you want to Complete this task , please go ahead</h6>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm close" data-dismiss="modal">Complete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="DeleteModel" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content bg-white">
+        <div class="modal-header bg-success">
+          <h4 class="modal-title text-white font-weight-bold">Task</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <h6>Do you want to delete the task , please go ahead</h6>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm close" data-dismiss="modal">Complete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content bg-white">
+        <div class="modal-header bg-success">
+          <h4 class="modal-title text-white font-weight-bold">View Single Task</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <table id="tableview" class="table table-hover table-bordered">
+                
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>  
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+
+
+
